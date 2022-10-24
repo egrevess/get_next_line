@@ -1,96 +1,85 @@
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: egrevess <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 13:03:36 by egrevess          #+#    #+#             */
+/*   Updated: 2022/10/24 16:41:34 by egrevess         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int	ft_strlen(char *buff)
+#include "get_next_line.h"
+
+int	ft_repere_ln(char *str)
 {
 	int	i;
 
 	i = 0;
-	while(buff[i])
-		i++;
-	return (i);
-}
-
-int	ft_putstr(char *temp, int i)
-{
-	int	count;
-
-	count = 0;
-	while (count <= i)
+	while (str[i])
 	{
-		write(1, &temp[count], 1);
-		count;
-	}
-	ft_free(temp,i);
-	return (i);
-}
-
-char	*ft_strcat(char *temp, char *buff)
-{
-	//voir piscine 
-}
-
-void	ft_repere(char *temp)
-{
-	int	i;
-
-	i = 0;
-	while (temp[i])
-	{
-		if (tem[i] == '\n')
+		if (str[i] == '\n')
 		{
-			ft_putstr(temp, i)
-			break ;
+			return (i);
 		}
 		i++;
 	}
+	return (-1);
 }
 
-
-void	ft_analyse(char *buff)
+char	*ft_free(char **str, char **str2)
 {
-	int		len;
-	static *char	temp;
-	int		i;
-	int	check;
-
-	check = 0;
-	i = 0;
-	len = ft_strlen(buff);
-	if (!temp)
+	if (str)
 	{
-		temp = malloc (sizeof(*char) + ft_strlen(temp) + len);
-		temp = ft_strcat(temp, buff);
-		if (len == 0)
-			ft_pustr(temp, ft_strlen(temp) - 1);
-		ft_repere;
-
+		free(*str);
+		*str = 0;
 	}
-	else
+	if (str2)
 	{
-		temp = malloc(sizeof(*char) * len);
-		temp = buff;
-		ft_repere(temp);
+		free(*str2);
+		*str2 = 0;
 	}
+	return (NULL);
 }
-
-void	ft_free(char *,int	i)
-{
-	while (i >= 0)
-	{
-		free(temp[i]);
-	}
-}
-
 
 char *get_next_line(int fd)
 {
-	char *buff;
+	int				read_ret;
+	static char		*temp;
+	char			*buff;
+	char			*line;
 
-	buff = malloc(sizeof(*char) * 5);
-	fopen(fd,r);
-	read(fd,buff,5);
-	ft_analyse(buff);
-	fclose(fd);
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (0);
+	buff = malloc(sizeof(*buff) * (BUFFER_SIZE + 1));
+	if (!buff)
+		return (NULL);
+	read_ret = 1;
+	buff[0] = '\0';
+	while (ft_repere_ln(buff) == -1 && read_ret > 0)
+	{
+		read_ret = read(fd, buff, BUFFER_SIZE);
+		buff[read_ret * (read_ret >= 0)] = '\0';
+		temp = ft_strcat(temp, buff);
+	}
+	free(buff);
+	if (ft_repere_ln(temp) != -1)
+	{
+		line = strcpy_untill_nl(temp);
+		temp = strcpy_from_nl(temp);
+		return (line);
+	}
+	else if (read_ret <= 0 && !temp[0])
+	{
+		ft_free(&temp, 0);
+		return (0);
+	}
+	else
+	{
+		line = ft_strdup(temp);
+		free(temp);
+		temp = 0;
+		return (line);
+	}
 }
