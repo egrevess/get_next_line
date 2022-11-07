@@ -6,7 +6,7 @@
 /*   By: egrevess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 12:10:56 by egrevess          #+#    #+#             */
-/*   Updated: 2022/10/24 16:28:59 by egrevess         ###   ########.fr       */
+/*   Updated: 2022/11/07 16:36:16 by egrevess         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_strlen(char	*str)
 	return (count);
 }
 
-char	*ft_strcat(char *temp, char *buff)
+char	*ft_strcat(char *temp, char **buff)
 {
 	char	*res;
 	int		buff_len;
@@ -32,40 +32,37 @@ char	*ft_strcat(char *temp, char *buff)
 	int		i;
 	int		j;
 
-	i = 0;
+	i = -1;
 	j = 0;
-	buff_len = ft_strlen(buff);
+	buff_len = ft_strlen(*buff);
 	temp_len = ft_strlen(temp);
 	res = malloc(sizeof(*res) * (buff_len + temp_len + 1));
 	if (!res)
-		return (ft_free(&temp, &buff));
-	while (i < temp_len)
-	{
+		return (ft_free(&temp, buff));
+	while (++i < temp_len)
 		res[i] = temp[i];
-		i++;
-	}
-	ft_free(&temp,0);
+	ft_free(&temp, 0);
 	while (j < buff_len)
 	{
-		res[i + j] = buff[j];
+		res[i + j] = (*buff)[j];
 		j++;
-	}
+	}	
 	res[i + j] = '\0';
 	return (res);
 }
 
-char	*strcpy_untill_nl(char *temp)
+char	*strcpy_untill_nl(char **temp)
 {
 	char	*line;
 	int		i;
 
 	i = 0;
-	line = malloc(sizeof(*line) * (ft_repere_ln(temp) + 2));
+	line = malloc(sizeof(*line) * (ft_repere_ln(*temp) + 2));
 	if (!line)
-		return (ft_free(&temp, 0));
-	while (i <= ft_repere_ln(temp))
+		return (ft_free(temp, 0));
+	while (i <= ft_repere_ln(*temp))
 	{
-		line[i] = temp[i];
+		line[i] = (*temp)[i];
 		i++;
 	}
 	line[i] = '\0';
@@ -78,7 +75,7 @@ char	*strcpy_from_nl(char *temp)
 	int		size;
 	int		i;
 	int		j;
-	
+
 	size = ft_strlen(temp) - ft_repere_ln(temp);
 	res = malloc(sizeof(*res) * (size));
 	if (!res)
@@ -92,7 +89,7 @@ char	*strcpy_from_nl(char *temp)
 		++i;
 	}
 	res[j] = '\0';
-	ft_free(&temp,0);
+	ft_free(&temp, 0);
 	return (res);
 }
 

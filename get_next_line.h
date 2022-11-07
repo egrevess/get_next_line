@@ -6,7 +6,7 @@
 /*   By: egrevess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 11:42:31 by egrevess          #+#    #+#             */
-/*   Updated: 2022/10/24 16:28:48 by egrevess         ###   ########.fr       */
+/*   Updated: 2022/11/07 16:17:28 by egrevess         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 5
 # endif
-#include <stdio.h>
+# include <stdio.h>
 
-#include <stdlib.h>
-#include <unistd.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 int		ft_repere_ln(char *str);
 char	*ft_free(char **str, char **str2);
 char	*get_next_line(int fd);
 int		ft_strlen(char *str);
-char	*ft_strcat(char *temp, char *buff);
-char	*strcpy_untill_nl(char *temp);
+char	*ft_strcat(char *temp, char **buff);
+char	*strcpy_untill_nl(char **temp);
 char	*strcpy_from_nl(char *temp);
 char	*ft_strdup(char *src);
 
