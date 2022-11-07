@@ -6,7 +6,7 @@
 /*   By: egrevess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 11:42:31 by egrevess          #+#    #+#             */
-/*   Updated: 2022/11/07 16:17:28 by egrevess         ###   ########.fr       */
+/*   Updated: 2022/11/07 17:10:02 by egrevess         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 5
 # endif
-# include <stdio.h>
 
 # include <stdlib.h>
 # include <unistd.h>
